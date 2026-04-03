@@ -3,79 +3,77 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import { THEMES, getTheme, STAGES_NAV } from "@/lib/theme";
 
 export default function Home() {
-  const [status, setStatus] = useState("Checking connection...");
-  const [tables, setTables] = useState<string[]>([]);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const router = useRouter();
 
   useEffect(() => {
+    setTheme(getTheme());
+    
     async function init() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) { router.push("/auth"); return; }
       setUser(session.user);
-
-      const { data: mission, error: mErr } = await supabase
-        .from("missions")
-        .insert({ owner_id: session.user.id, name: "__connection_test__" })
-        .select()
-        .single();
-
-      if (mErr) {
-        setStatus("Auth works but cannot create mission: " + mErr.message);
-        setLoading(false);
-        return;
-      }
-
-      const found: string[] = [];
-      const tableNames = [
-        "profiles", "missions", "mission_members", "framework_data",
-        "gate_decisions", "evidence", "situation_room_logs", "document_imports"
-      ];
-      for (const t of tableNames) {
-        const { error } = await supabase.from(t).select("*").limit(0);
-        if (!error) found.push(t);
-      }
-      setTables(found);
-
-      await supabase.from("missions").delete().eq("id", mission.id);
-
-      setStatus(found.length === 8
-        ? "All 8 tables accessible — auth + RLS working!"
-        : found.length + "/8 tables accessible");
       setLoading(false);
     }
     init();
   }, [router]);
 
-  async function handleLogout() {
-    await supabase.auth.signOut();
-    router.push("/auth");
-  }
-
   if (loading) return <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "system-ui" }}>Loading...</div>;
 
+  const t = THEMES[theme];
+
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", fontFamily: "system-ui", background: "#F4F6F8", padding: 24 }}>
-      <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 8, color: "#1B2631" }}>Arthur MCS — Level 2</h1>
-      <p style={{ fontSize: 13, color: "#5D6D7E", marginBottom: 24 }}>Logged in as <strong>{user?.email}</strong></p>
-      <div style={{ background: "#fff", borderRadius: 16, padding: 24, maxWidth: 500, width: "100%", border: "1px solid #E8EAED" }}>
-        <p style={{ fontSize: 14, fontWeight: 600, marginBottom: 16, color: "#1B2631" }}>{status}</p>
-        {tables.length > 0 && (
-          <>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#5D6D7E", marginBottom: 8 }}>Tables ({tables.length}/8):</p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-              {tables.map(t => (
-                <span key={t} style={{ padding: "4px 10px", background: "#1B9C8510", color: "#1B9C85", borderRadius: 8, fontSize: 12, fontWeight: 600 }}>{t}</span>
-              ))}
+    <div style={{ minHeight: "100vh", background: t.bg, padding: "40px 24px", fontFamily: "'DM Sans', sans-serif" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <h1 style={{ fontSize: 32, fontWeight: 800, color: t.text, marginBottom: 8 }}>
+          Arthur PM MCS — Cockpit
+        </h1>
+        <p style={{ fontSize: 14, color: t.textMuted, marginBottom: 32 }}>
+          Logged in as <strong>{user?.email}</strong>
+        </p>
+        
+        <div style={{ background: t.card, border: `1px solid ${t.cardBorder}`, borderRadius: 14, padding: 32, marginBottom: 24 }}>
+          <h2 style={{ fontSize: 20, fontWeight: 700, color: t.text, marginBottom: 16 }}>
+            CP7 Phase 1B In Progress
+          </h2>
+          <p style={{ fontSize: 14, color: t.text, marginBottom: 16, lineHeight: 1.6 }}>
+            Full Cockpit component is being ported from Level 1. For now, you can:
+          </p>
+          <ul style={{ fontSize: 14, color: t.textMuted, lineHeight: 1.8, marginBottom: 16 }}>
+            <li>Test cross-cutting modules: <a href="/situation-room" style={{ color: t.accent }}>Situation Room</a> | <a href="/intelligence" style={{ color: t.accent }}>Intelligence</a></li>
+            <li>View route map: <a href="/test/cp7" style={{ color: t.accent }}>All 95 Routes</a></li>
+            <li>Check test pages: <a href="/test/cp4" style={{ color: t.accent }}>CP4</a> | <a href="/test/cp5" style={{ color: t.accent }}>CP5</a> | <a href="/test/cp6" style={{ color: t.accent }}>CP6</a></li>
+          </ul>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: 16 }}>
+          {STAGES_NAV.map(stage => (
+            <div 
+              key={stage.id}
+              onClick={() => router.push(`/stage/${stage.id}`)}
+              style={{
+                background: `${stage.color}12`,
+                border: `2px solid ${stage.color}40`,
+                borderRadius: 14,
+                padding: 20,
+                cursor: "pointer",
+                transition: "transform 0.2s"
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
+              onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
+            >
+              <div style={{ fontSize: 28, marginBottom: 8 }}>{stage.icon}</div>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: t.text, marginBottom: 4 }}>{stage.title}</h3>
+              <p style={{ fontSize: 12, color: t.textMuted, margin: 0 }}>Stage {stage.id} · {stage.total} artifacts</p>
             </div>
-          </>
-        )}
-        <button onClick={handleLogout} style={{ marginTop: 20, width: "100%", padding: "10px", borderRadius: 10, border: "1px solid #E8EAED", background: "transparent", fontSize: 13, color: "#5D6D7E", cursor: "pointer" }}>Log out</button>
+          ))}
+        </div>
       </div>
-      <p style={{ fontSize: 11, color: "#95A5A6", marginTop: 24 }}>© 2026 Arthur · Mission Control System</p>
     </div>
   );
 }
