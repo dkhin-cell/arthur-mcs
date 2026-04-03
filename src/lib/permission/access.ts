@@ -1,37 +1,76 @@
 // src/lib/permission/access.ts
+// CP4 — Level 2 upgrade. Matches Supabase schema exactly.
+// Roles in mission_members: 'owner' | 'editor' | 'viewer'
+// Also checks missions.owner_id as fallback (owner doesn't need a member row)
+
 import { supabase } from '../supabaseClient';
-import { logSupabaseOperation } from '../supabaseLogger';
 
-export type Role = 'owner' | 'admin' | 'pm_lead' | 'pm' | 'contributor' | 'viewer';
+export type MemberRole = 'owner' | 'editor' | 'viewer';
 
-export async function canAccess(missionId: string, requiredRole: Role = 'viewer', userId?: string): Promise<boolean> {
-  const start = Date.now();
-  const finalUserId = userId || (await supabase.auth.getUser()).data.user?.id;
-  if (!finalUserId) return false;
+const ROLE_HIERARCHY: Record<MemberRole, number> = {
+  viewer: 1,
+  editor: 2,
+  owner: 3,
+};
 
-  const { data, error } = await supabase
+// ─── CORE ACCESS CHECK ───
+export async function canAccess(missionId: string, requiredRole: MemberRole = 'viewer'): Promise<boolean> {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return false;
+
+  // Check if user is mission owner (always has full access)
+  const { data: mission } = await supabase
+    .from('missions')
+    .select('owner_id')
+    .eq('id', missionId)
+    .single();
+
+  if (mission?.owner_id === user.id) return true;
+
+  // Check mission_members for team access (Level 3)
+  const { data: member } = await supabase
     .from('mission_members')
     .select('role')
     .eq('mission_id', missionId)
-    .eq('user_id', finalUserId)
+    .eq('user_id', user.id)
     .single();
 
-  await logSupabaseOperation({
-    operation: 'select',
-    table: 'mission_members',
-    missionId,
-    userId: finalUserId,
-    success: !error,
-    durationMs: Date.now() - start,
-    error: error?.message,
-  });
-
-  if (error || !data) return false;
-
-  const roleHierarchy: Record<Role, number> = { viewer: 1, contributor: 2, pm: 3, pm_lead: 4, admin: 5, owner: 6 };
-  return roleHierarchy[data.role as Role] >= roleHierarchy[requiredRole];
+  if (!member) return false;
+  return ROLE_HIERARCHY[member.role as MemberRole] >= ROLE_HIERARCHY[requiredRole];
 }
 
-export async function canWrite(missionId: string, userId?: string): Promise<boolean> {
-  return canAccess(missionId, 'contributor', userId);
+// ─── CONVENIENCE FUNCTIONS ───
+export async function canWrite(missionId: string): Promise<boolean> {
+  return canAccess(missionId, 'editor');
+}
+
+export async function canDecide(missionId: string): Promise<boolean> {
+  return canAccess(missionId, 'owner');
+}
+
+export async function canExport(missionId: string): Promise<boolean> {
+  return canAccess(missionId, 'viewer');
+}
+
+// ─── ROLE HELPERS ───
+export async function getCurrentRole(missionId: string): Promise<MemberRole | null> {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data: mission } = await supabase
+    .from('missions')
+    .select('owner_id')
+    .eq('id', missionId)
+    .single();
+
+  if (mission?.owner_id === user.id) return 'owner';
+
+  const { data: member } = await supabase
+    .from('mission_members')
+    .select('role')
+    .eq('mission_id', missionId)
+    .eq('user_id', user.id)
+    .single();
+
+  return (member?.role as MemberRole) || null;
 }

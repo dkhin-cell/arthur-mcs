@@ -1,8 +1,6 @@
 // src/lib/supabaseLogger.ts
-import { supabase } from './supabaseClient';
-
 export interface LogEntry {
-  operation: 'select' | 'insert' | 'update' | 'delete' | 'rpc';
+  operation: 'select' | 'insert' | 'update' | 'delete' | 'upsert';
   table: string;
   missionId?: string;
   userId: string;
@@ -12,9 +10,8 @@ export interface LogEntry {
 }
 
 export async function logSupabaseOperation(entry: LogEntry) {
-  const start = Date.now();
   try {
-    console.log(`[SUPABASE LOG] ${entry.operation.toUpperCase()} ${entry.table} | mission:${entry.missionId || '—'} | user:${entry.userId} | ${entry.success ? 'OK' : 'FAIL'} (${Date.now() - start}ms)`);
+    console.log(`[SUPABASE] ${entry.operation.toUpperCase()} ${entry.table} | mission:${entry.missionId || '—'} | user:${entry.userId} | ${entry.success ? 'OK' : 'FAIL'} (${entry.durationMs}ms)${entry.error ? ' | ' + entry.error : ''}`);
     return true;
   } catch (e) {
     console.error('[SUPABASE LOG ERROR]', e);
