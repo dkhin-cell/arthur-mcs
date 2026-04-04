@@ -1,7 +1,7 @@
 // Stage4Gate.tsx — Ported from Level 1 Stage4DecisionGate.jsx
 'use client';
 import { useState, useEffect, useRef } from "react";
-import { THEMES, getTheme, USER } from "./theme.js";
+import { THEMES, getTheme, USER } from "@/lib/theme";
 const STORAGE_KEY = "dk-stage4-gate";
 const TABS = ["Planning Brief", "Readiness Criteria", "Pre-Mortem", "Risk Assessment", "Decision"];
 const EXIT_CRITERIA = ["Living Brief assembled with evidence scores", "Roadmap with milestones and timeline", "DACI assigned for all key execution decisions", "OKRs with baseline, target, and confidence", "User stories with acceptance criteria", "Dependencies mapped with owners and risk", "Brief earned at least Opportunity Brief level"];

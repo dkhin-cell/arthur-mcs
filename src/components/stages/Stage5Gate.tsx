@@ -1,7 +1,7 @@
 // Stage5Gate.tsx — Ported from Level 1 Stage5DecisionGate.jsx
 'use client';
 import { useState, useEffect, useRef } from "react";
-import { THEMES, getTheme, USER } from "./theme.js";
+import { THEMES, getTheme, USER } from "@/lib/theme";
 const STORAGE_KEY = "dk-stage5-gate";
 const READINESS = ["Beachhead market defined with constraints", "MVP scope locked \u2014 in/out clear", "Launch metrics with baseline and target", "Feedback loops planned with owners", "Kill criteria written before launch", "At least one metric has real data"];
 function useAutoSave(s){const t=useRef(null);useEffect(()=>{clearTimeout(t.current);t.current=setTimeout(()=>{try{localStorage.setItem(STORAGE_KEY,JSON.stringify(s))}catch(e){}},500);return()=>clearTimeout(t.current)},[s])}

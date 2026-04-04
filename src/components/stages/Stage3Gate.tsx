@@ -1,7 +1,7 @@
 // Stage3Gate.tsx — Ported from Level 1 Stage3DecisionGate.jsx
 'use client';
 import { useState, useEffect, useRef } from "react";
-import { THEMES, getTheme, USER } from "./theme.js";
+import { THEMES, getTheme, USER } from "@/lib/theme";
 
 const STORAGE_KEY = "dk-stage3-gate";
 const TABS = ["Design Brief", "Readiness Criteria", "Pre-Mortem", "UX Validation", "Decision"];
