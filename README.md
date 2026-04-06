@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arthur · Mission Control System
 
-## Getting Started
+**A Hypothesis-Driven Operating System for Product Leaders.**
 
-First, run the development server:
+Arthur MCS guides product managers through a 9-stage pipeline — from problem validation to post-launch truth — with evidence-gated GO/PIVOT/KILL decisions at every stage. Built by [David Aung Khin](https://github.com/dkhin-cell) as a solo founder product.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Architecture
+
+- **Level 1 (Shipped):** Vite + React, localStorage, deployed at dk-stage0.vercel.app
+- **Level 2 (In Progress):** Next.js 14+ App Router, Supabase (PostgreSQL/Auth/RLS), Claude API (Sonnet), Tailwind + shadcn/ui
+- **Level 3 (Planned):** Sentinel tier — multi-agent integrations, signal classification, cross-mission routing
+
+## Repository Structure
+
+```
+arthur-mcs/
+├── src/                    # Next.js App Router source
+│   ├── app/                # Routes (stages, auth, intelligence, situation-room)
+│   ├── components/         # React components (sidebar, stages 0-5)
+│   └── lib/                # Services (supabase, permissions, telemetry, frameworks)
+├── decisions/              # Product decision logs (DEC-001 to DEC-013)
+├── prototypes/             # React demos (Pro tier V8, Free tier)
+├── docs/                   # Reference documentation
+│   ├── Arthur_MCS_Agent_Brief.md
+│   ├── ARTHUR_MCS_UX_CONSISTENCY_SPEC_FINAL.md
+│   ├── Arthur_MCS_Supernova_Feature_Specs.md
+│   └── DK_PMOS_Technical_Spec_Stage0-2_MVP.md
+├── AGENTS.md               # Multi-agent team roles
+└── CLAUDE.md               # CTO agent context
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## The 9 Stages
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Stage | Name | Question |
+|-------|------|----------|
+| 0 | Problem Scout | Is this a real problem worth solving? |
+| 1 | Strategy Architect | Where to play, how to win, what to measure? |
+| 2 | Opportunity Scout | What is the best opportunity to pursue? |
+| 3 | Design Lab | What should the solution look and feel like? |
+| 4 | Build Planner | What exactly are we building first? |
+| 5 | Launch Pad | Are we ready to ship? |
+| 6 | Scale Engine | How do we grow what's working? |
+| 7 | Maturity Matrix | How do we sustain and defend? |
+| 8 | Sunset Protocol | When and how do we wind down? |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Every stage has: Strategy Brief (PM inputs) → Frameworks (analysis tools) → Research (AI engine) → Decision Gate (GO/PIVOT/KILL).
 
-## Learn More
+## Decision Logs
 
-To learn more about Next.js, take a look at the following resources:
+13 product decisions documented in `/decisions/`. See [decisions/README.md](decisions/README.md) for the full index.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Key Design Documents
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Cornerstone Page:** Stage 1 Landing Page design is the binding template for all 9 stage landing pages ([DEC-010](decisions/010-stage1-landing-cornerstone.md))
+- **UX Consistency Spec:** P0/P1/P2 fixes for cross-stage consistency ([docs/](docs/ARTHUR_MCS_UX_CONSISTENCY_SPEC_FINAL.md))
+- **Technical Spec:** Stage 0-2 MVP architecture ([docs/](docs/DK_PMOS_Technical_Spec_Stage0-2_MVP.md))
 
-## Deploy on Vercel
+## Agent Team
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Agent | Role |
+|-------|------|
+| DK (David Aung Khin) | CEO/CPO/Director of Agent Orchestration |
+| Claude | CTO Advisor |
+| Daniel (ChatGPT) | COO Advisor |
+| Gemini | VP of Research & Analysis |
+| Carter | CMO |
+| Grok | VP of Engineering |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+Deployed via Vercel (auto-deploy from main branch).
+
+---
+
+*© 2026 Arthur · Mission Control System — Banyan Canopy LLC*
