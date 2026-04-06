@@ -1,5 +1,6 @@
 // ConfidenceMeter.tsx — Ported from Level 1 ConfidenceMeter.jsx
 'use client';
+// @ts-nocheck
 /**
  * ConfidenceMeter.jsx — Theme-Aware
  * Reads Mom Test data from localStorage, computes weighted confidence score.

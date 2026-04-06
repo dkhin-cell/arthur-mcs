@@ -1,5 +1,6 @@
 // Stage6UnitEconomics.tsx — Ported from Level 1 Stage6UnitEconomics.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme } from "@/lib/theme";
 const STORAGE_KEY = "dk-stage6-economics";

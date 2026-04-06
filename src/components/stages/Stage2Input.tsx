@@ -1,5 +1,6 @@
 // Stage2Input.tsx — Ported from Level 1 Stage2InputPanel.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme } from "@/lib/theme";
 

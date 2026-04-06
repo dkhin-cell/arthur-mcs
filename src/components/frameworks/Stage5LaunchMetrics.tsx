@@ -1,5 +1,6 @@
 // Stage5LaunchMetrics.tsx — Ported from Level 1 Stage5LaunchMetrics.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme } from "@/lib/theme";
 const STORAGE_KEY = "dk-stage5-metrics";

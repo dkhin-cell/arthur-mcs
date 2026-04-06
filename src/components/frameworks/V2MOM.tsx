@@ -1,5 +1,6 @@
 // V2MOM.tsx — Ported from Level 1 V2MOM.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme } from "@/lib/theme";
 

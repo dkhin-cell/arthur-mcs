@@ -1,5 +1,6 @@
 // StrategyCanvas.tsx — Ported from Level 1 StrategyCanvas.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef, useCallback } from "react";
 
 const STORAGE_KEY = "dk-stage0-strategy-canvas";

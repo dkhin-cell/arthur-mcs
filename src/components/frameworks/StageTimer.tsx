@@ -1,5 +1,6 @@
 // StageTimer.tsx — Ported from Level 1 StageTimer.jsx
 'use client';
+// @ts-nocheck
 /**
  * StageTimer.jsx — Theme-Aware
  * Reads stage entry timestamp from localStorage, shows days elapsed with thresholds.

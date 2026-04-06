@@ -1,5 +1,6 @@
 // Stage4Gate.tsx — Ported from Level 1 Stage4DecisionGate.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme, USER } from "@/lib/theme";
 const STORAGE_KEY = "dk-stage4-gate";

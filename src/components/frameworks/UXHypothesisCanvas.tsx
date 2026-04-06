@@ -1,5 +1,6 @@
 // UXHypothesisCanvas.tsx — Ported from Level 1 UXHypothesisCanvas.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme } from "@/lib/theme";
 

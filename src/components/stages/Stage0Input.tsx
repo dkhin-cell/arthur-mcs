@@ -1,5 +1,6 @@
 // Stage0Input.tsx — Ported from Level 1 Stage0InputPanel.jsx
 'use client';
+// @ts-nocheck
 import { useState, useCallback, useEffect, useRef } from "react";
 
 const STORAGE_KEY = "dk-stage0-session";

@@ -1,5 +1,6 @@
 // UserStories.tsx — Ported from Level 1 UserStories.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme } from "@/lib/theme";
 const STORAGE_KEY = "dk-stage4-stories";

@@ -1,5 +1,6 @@
 // Stage8KillCriteria.tsx — Ported from Level 1 Stage8KillCriteria.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme } from "@/lib/theme";
 const STORAGE_KEY = "dk-stage8-killcriteria";

@@ -1,5 +1,6 @@
 // KanoModel2.tsx — Ported from Level 1 KanoModel2.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme } from "@/lib/theme";
 

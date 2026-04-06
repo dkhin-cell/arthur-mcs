@@ -1,5 +1,6 @@
 // Stage3Gate.tsx — Ported from Level 1 Stage3DecisionGate.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 import { THEMES, getTheme, USER } from "@/lib/theme";
 

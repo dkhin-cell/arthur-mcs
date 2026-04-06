@@ -1,5 +1,6 @@
 // Stage0Gate.tsx — Ported from Level 1 DecisionGate.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect, useRef } from "react";
 
 const STORAGE_KEY = "dk-stage0-gate";

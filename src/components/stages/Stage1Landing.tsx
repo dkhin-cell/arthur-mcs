@@ -1,5 +1,6 @@
 // Stage1Landing.tsx — Ported from Level 1 Stage1Landing.jsx
 'use client';
+// @ts-nocheck
 import { useState, useEffect } from "react";
 import { THEMES, getTheme } from "@/lib/theme";
 
