@@ -36,6 +36,10 @@ The logs demonstrate product leadership, technical decision-making, and multi-ag
 | 007 | Validation Telemetry | 2026-03-20 | Identified demo problem, chose RideX scenario from domain expertise, directed scope | Shipped |
 | 008 | Ambient Radar | 2026-03-18 | Identified external intelligence gap, directed vision-first UI strategy, mapped evolution path | Shipped |
 | 009 | No chat — Decision Annotations | 2026-04-03 | Raised the collaboration question, pressure-tested at both scales, validated final UI integration | Specced |
+| 010 | Stage 1 Landing — Cornerstone Page | 2026-04-05 | Designed and locked binding template for all 9 stage landing pages across L2+L3 | Locked |
+| 011 | ThinkSpace — Spatial Thinking Canvas | 2026-04-05 | Reusable drag-and-drop 2D canvas powering 12 frameworks across 6 stages | Approved |
+| 012 | Stage 4 Export Gate + Payload Architecture | 2026-04-04 | One canonical payload → Export Router → tool-specific format for 30+ tools | Approved |
+| 013 | Product → Mission Hierarchy | 2026-04-05 | Option B — Implicit Product Model. Auto-create product from first mission | Approved |
 
 ## Adding New Decisions
 
