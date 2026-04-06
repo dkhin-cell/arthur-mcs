@@ -16,8 +16,8 @@ const GROUPS = [
   { label: "Input", color: "#E67E22", desc: "Define The Strategy Space", items: [
     { id: "input-panel", title: "Input Panel", desc: "Vision, where to play, how to win, what not to do, North Star candidates, time horizon.", icon: "📋", route: "/stage/1/input" },
   ]},
-  { label: "Research", color: "#D4AC0D", desc: "Dispatch To Carter", items: [
-    { id: "research-engine", title: "Research Engine", desc: "Strategy analysis, vision stress test, OKR generation, North Star validation.", icon: "🔍", route: null, forceStatus: "waiting" },
+  { label: "Research", color: "#D4AC0D", desc: "Research & Analysis", items: [
+    { id: "research-engine", title: "Research Engine", desc: "Strategy analysis, vision stress test, OKR generation, North Star validation.", icon: "🔍", route: null, forceStatus: "not_started" },
   ]},
   { label: "Required Evidence", color: "#3498DB", desc: "Strategy, Metrics & Validation", items: [
     { id: "v2mom", title: "V2MOM", desc: "Vision, Values, Methods, Obstacles, Measures — the strategic backbone.", icon: "🎯", route: "/stage/1/v2mom" },
@@ -43,7 +43,7 @@ function useIsMobile() { const [m, setM] = useState(typeof window !== "undefined
 function ArtifactCard({ item, stageColor, theme, hasData }) {
   const t = THEMES[theme];
   const isClickable = item.route !== null;
-  const status = item.forceStatus === "waiting" ? { label: "Awaiting Dispatch", color: "#2980B9", bg: "#EBF5FB" } : hasData ? { label: "In Progress", color: "#E67E22", bg: "#FEF5E7" } : { label: "Ready", color: "#1B9C85", bg: "#D5F5E3" };
+  const status = item.forceStatus === "not_started" ? { label: "Not Started", color: "#2980B9", bg: "#EBF5FB" } : hasData ? { label: "In Progress", color: "#E67E22", bg: "#FEF5E7" } : { label: "Ready", color: "#1B9C85", bg: "#D5F5E3" };
   return (
     <div onClick={isClickable ? () => { window.location.href = item.route; } : undefined} style={{ background: t.card, border: `1px solid ${t.cardBorder}`, borderRadius: 12, padding: "16px 18px 14px", cursor: isClickable ? "pointer" : "default", transition: "all 0.3s ease" }}
     onMouseEnter={e => { if (isClickable) { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = `0 8px 24px ${stageColor}25`; e.currentTarget.style.borderColor = stageColor; } }}
@@ -65,7 +65,7 @@ export default function Stage1Landing() {
   const [theme] = useState(getTheme);
   const t = THEMES[theme];
   const [refresh, setRefresh] = useState(0);
-  useEffect(() => { const h = () => setRefresh(r => r + 1); window.addEventListener("focus", h); /* hashchange not needed in Next.js */; return () => { window.removeEventListener("focus", h); /* removed hashchange listener */; }; }, []);
+  useEffect(() => { const h = () => setRefresh(r => r + 1); window.addEventListener("focus", h); /* hashchange not needed */; return () => { window.removeEventListener("focus", h); /* removed hashchange */; }; }, []);
 
   const allItems = GROUPS.flatMap(g => g.items);
   const dataStatus = {}; allItems.forEach(i => { dataStatus[i.id] = checkHasData(i.id); });
@@ -96,7 +96,7 @@ export default function Stage1Landing() {
               { label: "Artifacts Touched", value: `${touchedCount}/${totalCount}`, color: touchedCount > 0 ? "#1B9C85" : "#95A5A6" },
               { label: "Readiness Criteria", value: `${gate.passed}/${gate.total}`, color: gate.passed > 0 ? "#1B9C85" : "#E67E22" },
               { label: "Gate Status", value: gate.decision ? gate.decision.toUpperCase() : "Pending", color: gate.decision === "go" ? "#1B9C85" : gate.decision ? "#E67E22" : "#95A5A6" },
-              { label: "Completion", value: `${Math.round((touchedCount / totalCount) * 100)}%`, color: touchedCount === totalCount ? "#1B9C85" : "#E67E22" },
+              { label: "Decision", value: `${Math.round((touchedCount / totalCount) * 100)}%`, color: touchedCount === totalCount ? "#1B9C85" : "#E67E22" },
             ].map((s, i) => (
               <div key={i} style={{ padding: "12px 14px", borderRadius: 10, background: t.card, border: `1px solid ${t.cardBorder}` }}>
                 <p style={{ fontSize: 10, fontFamily: "'DM Mono',monospace", color: t.textDim, margin: "0 0 3px", textTransform: "uppercase", letterSpacing: "0.05em" }}>{s.label}</p>

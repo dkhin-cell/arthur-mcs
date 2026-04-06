@@ -198,7 +198,7 @@ export default function Stage3Gate() {
               <p style={{ fontSize: 11, color: t.textDim, margin: 0 }}>{state.decidedAt ? `Decided ${new Date(state.decidedAt).toLocaleDateString()} by ${state.decidedBy}` : ""}</p>
             </div>
           )}
-          <p style={{ fontSize: 11, color: t.textDim, fontFamily: "'DM Mono',monospace", textAlign: "center", marginTop: 12 }}>This is a suggestion. Gates advise. You decide.</p>
+          <p style={{ fontSize: 11, color: t.textDim, fontFamily: "'DM Mono',monospace", textAlign: "center", marginTop: 12 }}>Gates advise. They don't block. You decide.</p>
         </div>
       )}
 

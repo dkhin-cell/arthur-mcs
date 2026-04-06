@@ -7,7 +7,7 @@ function useAutoSave(s){const t=useRef(null);useEffect(()=>{clearTimeout(t.curre
 function loadSaved(){try{const r=localStorage.getItem(STORAGE_KEY);if(r)return JSON.parse(r)}catch(e){}return null}
 function loadCF(){const cf={};try{const s=JSON.parse(localStorage.getItem("dk-stage0-session")||"{}");cf.problem=s.problem_hypothesis||""}catch(e){}try{const s=JSON.parse(localStorage.getItem("dk-stage1-session")||"{}");cf.vision=s.vision_statement||""}catch(e){}try{const s=JSON.parse(localStorage.getItem("dk-stage2-beachhead")||"{}");cf.beachhead=s.selected||""}catch(e){}try{const s=JSON.parse(localStorage.getItem("dk-stage3-protospec")||"{}");cf.prototype=s.name?s.name+" ("+( s.fidelity||"?")+")":" "}catch(e){}try{const s=JSON.parse(localStorage.getItem("dk-stage4-roadmap")||"{}");cf.roadmap=s.milestones||""}catch(e){}try{const r=JSON.parse(localStorage.getItem("dk-stage4-brief")||"{}");cf.briefLevel=r.overrides?"Brief data exists":""}catch(e){}return cf}
 export default function Stage5Input(){
-  const[theme]=useState(getTheme);const t=THEMES[theme];const[mobile,setMobile]=useState(window.innerWidth<700);
+  const[theme]=useState(getTheme);const t=THEMES[theme];const[mobile,setMobile]=useState(typeof window !== "undefined" ? window.innerWidth < 700 : false);
   useEffect(()=>{const c=()=>setMobile(window.innerWidth<700);window.addEventListener("resize",c);return()=>window.removeEventListener("resize",c)},[]);
   const cf=loadCF();const hasCF=cf.problem||cf.beachhead||cf.prototype;
   const[state,setState]=useState(()=>loadSaved()||{launchMarket:"",mvpFocus:"",timeline:"",teamAllocation:"",successCriteria:""});const[toast,setToast]=useState(null);

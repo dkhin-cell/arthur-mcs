@@ -7,7 +7,7 @@ const GROUPS = [{"title": "Input", "items": [{"name": "Input Panel", "route": "#
 const READINESS = ["Beachhead market defined with constraints", "MVP scope locked \u2014 in/out clear", "Launch metrics with baseline and target", "Feedback loops planned with owners", "Kill criteria written before launch", "At least one metric has real data"];
 function hasData(key){try{const d=localStorage.getItem(key);return d&&d!=="{}"&&d!=="null"}catch(e){return false}}
 export default function Stage5Landing(){
-  const[theme]=useState(getTheme);const t=THEMES[theme];const[mobile,setMobile]=useState(window.innerWidth<700);
+  const[theme]=useState(getTheme);const t=THEMES[theme];const[mobile,setMobile]=useState(typeof window !== "undefined" ? window.innerWidth < 700 : false);
   useEffect(()=>{const c=()=>setMobile(window.innerWidth<700);window.addEventListener("resize",c);return()=>window.removeEventListener("resize",c)},[]);
   const allItems=GROUPS.flatMap(g=>g.items);const touched=allItems.filter(i=>hasData(i.key)).length;
   const gate=(()=>{try{return JSON.parse(localStorage.getItem("dk-stage5-gate")||"{}")}catch(e){return{}}})();
@@ -24,7 +24,7 @@ export default function Stage5Landing(){
         <div style={{width:60,height:4,background:COLOR,borderRadius:2,marginTop:12}}/>
       </div>
       <div style={{display:"grid",gridTemplateColumns:mobile?"1fr 1fr":"1fr 1fr 1fr 1fr",gap:10,marginBottom:20}}>
-        {[{label:"Artifacts Touched",value:touched+"/"+allItems.length},{label:"Readiness",value:readinessPass+"/"+READINESS.length},{label:"Gate Status",value:gate.decision?gate.decision.toUpperCase():"Pending"},{label:"Decision",value:gate.decision?gate.decision.toUpperCase():"—"}].map((s,i)=>(
+        {[{label:"Artifacts Touched",value:touched+"/"+allItems.length},{label:"Readiness Criteria",value:readinessPass+"/"+READINESS.length},{label:"Gate Status",value:gate.decision?gate.decision.toUpperCase():"Pending"},{label:"Decision",value:gate.decision?gate.decision.toUpperCase():"—"}].map((s,i)=>(
           <div key={i} style={{padding:"14px 16px",background:t.card,border:"1px solid "+t.cardBorder,borderRadius:12}}>
             <p style={{fontSize:10,fontFamily:"'DM Mono',monospace",color:t.textDim,margin:"0 0 4px",textTransform:"uppercase"}}>{s.label}</p>
             <p style={{fontSize:22,fontWeight:800,color:COLOR,margin:0,fontFamily:"'DM Mono',monospace"}}>{s.value}</p>

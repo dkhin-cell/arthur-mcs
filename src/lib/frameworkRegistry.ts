@@ -1,6 +1,6 @@
 // src/lib/frameworkRegistry.ts
 // Stage-to-component registry for dynamic route resolution
-// Phase 2A: Stages 0-2 | Phase 2B: Stages 3-5 | Phase 2C adds 6-8
+// Phase 2 Complete: All 9 stages (0-8)
 
 import type { ComponentType } from 'react';
 
@@ -41,17 +41,26 @@ export const STAGE_REGISTRY: Record<string, StageConfig> = {
     input: () => import('@/components/stages/Stage5Input'),
     gate: () => import('@/components/stages/Stage5Gate'),
   },
-  // Phase 2C: Stages 6-8 will be added here
+  '6': {
+    landing: () => import('@/components/stages/Stage6Landing'),
+    input: () => import('@/components/stages/Stage6Input'),
+    gate: () => import('@/components/stages/Stage6Gate'),
+  },
+  '7': {
+    landing: () => import('@/components/stages/Stage7Landing'),
+    input: () => import('@/components/stages/Stage7Input'),
+    gate: () => import('@/components/stages/Stage7Gate'),
+  },
+  '8': {
+    landing: () => import('@/components/stages/Stage8Landing'),
+    input: () => import('@/components/stages/Stage8Input'),
+    gate: () => import('@/components/stages/Stage8Gate'),
+  },
 };
 
 export const VALID_STAGES = Object.keys(STAGE_REGISTRY);
 
 // Framework routes within each stage (for Phase 3)
 export const FRAMEWORK_REGISTRY: Record<string, Record<string, () => Promise<{ default: ComponentType }>>> = {
-  '0': {},
-  '1': {},
-  '2': {},
-  '3': {},
-  '4': {},
-  '5': {},
+  '0': {}, '1': {}, '2': {}, '3': {}, '4': {}, '5': {}, '6': {}, '7': {}, '8': {},
 };

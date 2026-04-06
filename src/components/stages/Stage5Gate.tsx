@@ -7,7 +7,7 @@ const READINESS = ["Beachhead market defined with constraints", "MVP scope locke
 function useAutoSave(s){const t=useRef(null);useEffect(()=>{clearTimeout(t.current);t.current=setTimeout(()=>{try{localStorage.setItem(STORAGE_KEY,JSON.stringify(s))}catch(e){}},500);return()=>clearTimeout(t.current)},[s])}
 function loadSaved(){try{const r=localStorage.getItem(STORAGE_KEY);if(r)return JSON.parse(r)}catch(e){}return null}
 export default function Stage5Gate(){
-  const[theme]=useState(getTheme);const t=THEMES[theme];const[mobile,setMobile]=useState(window.innerWidth<700);
+  const[theme]=useState(getTheme);const t=THEMES[theme];const[mobile,setMobile]=useState(typeof window !== "undefined" ? window.innerWidth < 700 : false);
   useEffect(()=>{const c=()=>setMobile(window.innerWidth<700);window.addEventListener("resize",c);return()=>window.removeEventListener("resize",c)},[]);
   const[state,setState]=useState(()=>loadSaved()||{criteria:READINESS.map(c=>({name:c,status:"pending"})),preMortem:[{scenario:"",likelihood:3,mitigation:""}],decision:null,notes:"",decidedAt:null,decidedBy:USER?.name||"Unknown"});
   const[toast,setToast]=useState(null);const[tab,setTab]=useState(0);useAutoSave(state);

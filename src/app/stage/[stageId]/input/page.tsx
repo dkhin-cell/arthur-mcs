@@ -11,31 +11,22 @@ import Stage2Input from '@/components/stages/Stage2Input';
 import Stage3Input from '@/components/stages/Stage3Input';
 import Stage4Input from '@/components/stages/Stage4Input';
 import Stage5Input from '@/components/stages/Stage5Input';
+import Stage6Input from '@/components/stages/Stage6Input';
+import Stage7Input from '@/components/stages/Stage7Input';
+import Stage8Input from '@/components/stages/Stage8Input';
 
 const INPUT_MAP: Record<string, React.ComponentType> = {
-  '0': Stage0Input,
-  '1': Stage1Input,
-  '2': Stage2Input,
-  '3': Stage3Input,
-  '4': Stage4Input,
-  '5': Stage5Input,
+  '0': Stage0Input, '1': Stage1Input, '2': Stage2Input,
+  '3': Stage3Input, '4': Stage4Input, '5': Stage5Input,
+  '6': Stage6Input, '7': Stage7Input, '8': Stage8Input,
 };
 
-interface Props {
-  params: Promise<{ stageId: string }>;
-}
+interface Props { params: Promise<{ stageId: string }>; }
 
 export default function StageInputPage({ params }: Props) {
   const { stageId } = use(params);
-
-  if (!VALID_STAGES.includes(stageId)) {
-    notFound();
-  }
-
+  if (!VALID_STAGES.includes(stageId)) notFound();
   const Component = INPUT_MAP[stageId];
-  if (!Component) {
-    notFound();
-  }
-
+  if (!Component) notFound();
   return <Component />;
 }

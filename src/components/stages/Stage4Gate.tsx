@@ -11,7 +11,7 @@ function has(k){try{const d=localStorage.getItem(k);return d&&d!=="{}"&&d!=="nul
 function getBriefLevel(){const g={};try{g.s0=JSON.parse(localStorage.getItem("dk-stage0-gate")||"{}").decision}catch(e){}try{g.s1=JSON.parse(localStorage.getItem("dk-stage1-gate")||"{}").decision}catch(e){}try{g.s2=JSON.parse(localStorage.getItem("dk-stage2-gate")||"{}").decision}catch(e){}try{g.s3=JSON.parse(localStorage.getItem("dk-stage3-gate")||"{}").decision}catch(e){}const hs=has("dk-stage4-stories")&&has("dk-stage4-acceptance");if(g.s0==="go"&&g.s1==="go"&&g.s2==="go"&&g.s3==="go"&&hs)return{name:"PRD",level:6,color:"#1B9C85"};if(g.s0==="go"&&g.s1==="go"&&g.s2==="go"&&g.s3==="go")return{name:"Product Brief",level:5,color:"#2ECC71"};if(g.s0==="go"&&g.s1==="go"&&g.s2==="go")return{name:"Opportunity Brief",level:4,color:"#F1C40F"};if(g.s0==="go"&&g.s1==="go")return{name:"Strategy Brief",level:3,color:"#E67E22"};if(g.s0==="go")return{name:"Problem Brief",level:2,color:"#E74C3C"};return{name:"Working Draft",level:1,color:"#95A5A6"}}
 
 export default function Stage4Gate(){
-  const[theme]=useState(getTheme);const t=THEMES[theme];const[mobile,setMobile]=useState(window.innerWidth<700);
+  const[theme]=useState(getTheme);const t=THEMES[theme];const[mobile,setMobile]=useState(typeof window !== "undefined" ? window.innerWidth < 700 : false);
   useEffect(()=>{const c=()=>setMobile(window.innerWidth<700);window.addEventListener("resize",c);return()=>window.removeEventListener("resize",c)},[]);
   const[tab,setTab]=useState(0);
   const[state,setState]=useState(()=>loadSaved()||{criteria:EXIT_CRITERIA.map(c=>({name:c,status:"pending"})),preMortem:[{scenario:"",likelihood:3,mitigation:""}],riskNotes:"",decision:null,notes:"",decidedAt:null,decidedBy:USER?.name||"Unknown"});
@@ -86,7 +86,7 @@ export default function Stage4Gate(){
           <p style={{fontSize:13,fontWeight:700,color:state.decision==="go"?"#1B9C85":state.decision==="pivot"?"#E67E22":"#E74C3C",margin:"0 0 4px"}}>Stage 4 Verdict: {state.decision.toUpperCase()}</p>
           <p style={{fontSize:11,color:t.textDim,margin:0}}>{state.decidedAt?`Decided ${new Date(state.decidedAt).toLocaleDateString()} by ${state.decidedBy}`:""}</p>
         </div>)}
-        <p style={{fontSize:11,color:t.textDim,fontFamily:"'DM Mono',monospace",textAlign:"center",marginTop:12}}>Gates advise. You decide.</p>
+        <p style={{fontSize:11,color:t.textDim,fontFamily:"'DM Mono',monospace",textAlign:"center",marginTop:12}}>Gates advise. They don't block. You decide.</p>
       </div>)}
 
       <div style={{display:"flex",gap:8,flexWrap:"wrap",marginTop:16}}>

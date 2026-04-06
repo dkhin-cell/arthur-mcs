@@ -78,16 +78,16 @@ export default function Stage1Input() {
   const exportPayload = () => {
     const payload = { stage: 1, carry_forward: carryForward, inputs: state, exported_at: new Date().toISOString() };
     navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
-    setToast("Dispatch payload copied to clipboard");
+    setToast("Data copied to clipboard");
   };
 
-  const importFromManus = () => {
-    const raw = prompt("Paste Carter's JSON response:");
+  const importJSON = () => {
+    const raw = prompt("Paste JSON data:");
     if (!raw) return;
     try {
       const data = JSON.parse(raw);
       if (data.stage1_inputs) setState(prev => ({ ...prev, ...data.stage1_inputs }));
-      setToast("Imported from Carter");
+      setToast("Data imported");
     } catch (e) { setToast("Invalid JSON"); }
   };
 
@@ -203,8 +203,8 @@ export default function Stage1Input() {
 
       {/* Action buttons */}
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 8 }}>
-        <button onClick={exportPayload} style={{ padding: "12px 20px", background: "#E67E22", color: "#fff", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", flex: 1, minWidth: 140, minHeight: 48 }}>📤 Export Dispatch Payload</button>
-        <button onClick={importFromManus} style={{ padding: "12px 20px", background: t.text, color: t.bg, border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", flex: 1, minWidth: 140, minHeight: 48 }}>📥 Import from Carter</button>
+        <button onClick={exportPayload} style={{ padding: "12px 20px", background: "#E67E22", color: "#fff", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", flex: 1, minWidth: 140, minHeight: 48 }}>📤 Export Data</button>
+        <button onClick={importJSON} style={{ padding: "12px 20px", background: t.text, color: t.bg, border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: "pointer", flex: 1, minWidth: 140, minHeight: 48 }}>📥 Import JSON</button>
         <button onClick={() => {
           const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
           const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url;

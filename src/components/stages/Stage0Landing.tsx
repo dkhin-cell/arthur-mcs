@@ -16,8 +16,8 @@ const GROUPS = [
   { label: "Input", color: "#E74C3C", desc: "Define The Problem Space", items: [
     { id: "input-panel", title: "Input Panel", desc: "Problem hypothesis, target segment, JTBD, competitors, assumptions, transcripts.", icon: "📋", route: "/stage/0/input" },
   ]},
-  { label: "Research", color: "#E67E22", desc: "Dispatch To Carter", items: [
-    { id: "research-engine", title: "Research Engine", desc: "Market sizing, competitive intel, interview synthesis, regulatory scan, evidence scan.", icon: "🔍", route: null, forceStatus: "waiting" },
+  { label: "Research", color: "#E67E22", desc: "Research & Analysis", items: [
+    { id: "research-engine", title: "Research Engine", desc: "Market sizing, competitive intel, interview synthesis, regulatory scan, evidence scan.", icon: "🔍", route: null, forceStatus: "not_started" },
   ]},
   { label: "Required Evidence", color: "#3498DB", desc: "Analyze & Validate", items: [
     { id: "swot", title: "SWOT Analysis", desc: "Four-quadrant grid with evidence linking and signal tags.", icon: "⊞", route: "/stage/0/swot" },
@@ -44,7 +44,7 @@ function useIsMobile() { const [m, setM] = useState(typeof window !== "undefined
 function ArtifactCard({ item, stageColor, theme, hasData }) {
   const t = THEMES[theme];
   const isClickable = item.route !== null;
-  const status = item.forceStatus === "waiting" ? { label: "Awaiting Dispatch", color: "#2980B9", bg: "#EBF5FB" } : hasData ? { label: "In Progress", color: "#E67E22", bg: "#FEF5E7" } : { label: "Ready", color: "#1B9C85", bg: "#D5F5E3" };
+  const status = item.forceStatus === "not_started" ? { label: "Not Started", color: "#2980B9", bg: "#EBF5FB" } : hasData ? { label: "In Progress", color: "#E67E22", bg: "#FEF5E7" } : { label: "Ready", color: "#1B9C85", bg: "#D5F5E3" };
   return (
     <div onClick={isClickable ? () => { window.location.href = item.route; } : undefined} style={{ background: t.card, border: `1px solid ${t.cardBorder}`, borderRadius: 12, padding: "16px 18px 14px", cursor: isClickable ? "pointer" : "default", transition: "all 0.3s ease" }}
     onMouseEnter={e => { if (isClickable) { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = `0 8px 24px ${stageColor}25`; e.currentTarget.style.borderColor = stageColor; } }}
@@ -66,7 +66,7 @@ export default function Stage0Landing() {
   const [theme] = useState(getTheme);
   const t = THEMES[theme];
   const [refresh, setRefresh] = useState(0);
-  useEffect(() => { const h = () => setRefresh(r => r + 1); window.addEventListener("focus", h); /* hashchange not needed in Next.js */; return () => { window.removeEventListener("focus", h); /* removed hashchange listener */; }; }, []);
+  useEffect(() => { const h = () => setRefresh(r => r + 1); window.addEventListener("focus", h); /* hashchange not needed */; return () => { window.removeEventListener("focus", h); /* removed hashchange */; }; }, []);
 
   const allItems = GROUPS.flatMap(g => g.items);
   const dataStatus = {}; allItems.forEach(i => { dataStatus[i.id] = checkHasData(i.id); });

@@ -358,9 +358,9 @@ export default function Stage0Gate() {
       {activeTab === "decision" && (
         <div>
           <div style={{ padding: "18px 22px", background: "#EBF5FB", borderRadius: 14, border: "1px solid #AED6F1", marginBottom: 20 }}>
-            <p style={{ fontSize: 14, fontWeight: 700, color: "#1B4F72", margin: "0 0 8px 0" }}>This decision is yours.</p>
+            <p style={{ fontSize: 14, fontWeight: 700, color: "#1B4F72", margin: "0 0 8px 0" }}>Gates advise. They don't block. You decide.</p>
             <p style={{ fontSize: 13, color: "#2C3E50", margin: 0, lineHeight: 1.5 }}>
-              The analysis above is a suggestion based on available evidence. AI does not make GO/PIVOT/KILL decisions. You do.
+              Gates advise. They don't block. You decide.
             </p>
           </div>
 

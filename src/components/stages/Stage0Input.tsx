@@ -238,7 +238,7 @@ export default function Stage0Input() {
       }
     };
     setExported(JSON.stringify(payload, null, 2));
-    setToast("Dispatch payload generated");
+    setToast("Data exported");
   }, [hypothesis, segment, jtbd, competitors, keywords, notSolving, capability, assumptions, transcripts]);
 
   const saveSession = () => {
@@ -482,21 +482,21 @@ export default function Stage0Input() {
       <div style={{ marginTop: 28, borderTop: "2px solid #E8EAED", paddingTop: 20 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, flexWrap: "wrap", gap: 12 }}>
           <div>
-            <p style={{ fontSize: 15, fontWeight: 700, color: "#1B4F72", margin: "0 0 4px 0" }}>Dispatch To Manus</p>
+            <p style={{ fontSize: 15, fontWeight: 700, color: "#1B4F72", margin: "0 0 4px 0" }}>Export Session Data</p>
             <p style={{ fontSize: 12, color: "#7F8C8D", margin: 0 }}>
               {allRequired ? "All required fields complete. Ready to export." : "Complete all required fields to enable export."}
             </p>
           </div>
           <button onClick={generatePayload} disabled={!allRequired}
             style={{ padding: "12px 28px", background: allRequired ? "#1B4F72" : "#D5D8DC", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: allRequired ? "pointer" : "not-allowed", fontFamily: "'DM Sans', sans-serif", minHeight: 48, width: mobile ? "100%" : "auto" }}>
-            Generate Dispatch Payload
+            Export Data
           </button>
         </div>
 
         {exported && (
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8, flexWrap: "wrap", gap: 8 }}>
-              <span style={{ fontSize: 12, fontFamily: "'DM Mono', monospace", color: "#1B9C85", fontWeight: 600 }}>dispatch_payload.json</span>
+              <span style={{ fontSize: 12, fontFamily: "'DM Mono', monospace", color: "#1B9C85", fontWeight: 600 }}>export_data.json</span>
               <button onClick={() => { navigator.clipboard.writeText(exported); setToast("Copied to clipboard"); }}
                 style={{ padding: "10px 18px", background: "#1B9C85", color: "#fff", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", minHeight: 44 }}>
                 Copy To Clipboard
@@ -507,7 +507,7 @@ export default function Stage0Input() {
             </pre>
             <div style={{ marginTop: 12, padding: "14px 16px", background: "#EBF5FB", borderRadius: 8, borderLeft: "4px solid #1B4F72" }}>
               <p style={{ fontSize: 13, color: "#1B4F72", margin: "0 0 4px 0", fontWeight: 600 }}>Next Step:</p>
-              <p style={{ fontSize: 13, color: "#2C3E50", margin: 0, lineHeight: 1.5 }}>Copy this payload and paste it into Manus with your mission prompt. Manus will return structured research results that feed into the Framework Suite.</p>
+              <p style={{ fontSize: 13, color: "#2C3E50", margin: 0, lineHeight: 1.5 }}>Export your session data as structured JSON for backup or external tools.</p>
             </div>
           </div>
         )}
